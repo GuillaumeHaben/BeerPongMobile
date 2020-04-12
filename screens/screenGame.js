@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, View} from 'react-native';
 import Game from '../components/Game';
 
-function screenGame() {
+function screenGame({ route }) {
+  const { id } = route.params;
 
   return (
-    <View style={styles.game}>
-      <Game></Game>
+    <View style={ styles.game }>
+      <Game id={ id }></Game>
     </View>
   );
 }

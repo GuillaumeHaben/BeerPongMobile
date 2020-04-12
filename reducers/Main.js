@@ -1,5 +1,5 @@
 export const initialState = {
-    games: []
+    games: [ ]
   };
   
   export const reducer = (state, action) => {
@@ -20,6 +20,8 @@ export const initialState = {
          * action.id: Game id to modify
          * action.counter: Counter to increment, "Hit" or "Miss"
          */
+        // Check what gamesCopy is (array or just one game)
+        console.log("update for game: ", action.id)
         const gamesCopy = state.games.map((game) => {
           if (game.id === action.id) {
             if (action.counter == "Hit") {
@@ -39,10 +41,11 @@ export const initialState = {
         /**
          * action.id: Game id to delete
          */
-        const gamesCopy = state.games.filter( game => game.id !== action.id);
-        return { ...state,
-          games: gamesCopy,
-        };
+        // const gamesCopy = state.games.filter( game => game.id !== action.id);
+        // return { ...state,
+        //   games: gamesCopy,
+        // };
+        return { games: [] }
       }
       default:
         return state;

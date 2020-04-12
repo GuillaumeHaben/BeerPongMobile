@@ -1,36 +1,35 @@
-import React, { useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Button, Text, Container} from 'native-base';
+import { initialState, reducer } from "../reducers/Main.js";
 
-function Game() {
+function Game({ id }) {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    const [counterHit, updateCounterHit] = useState(0);
-    const [counterMiss, updateCounterMiss] = useState(0);
+    console.log(state.games)
 
-    function resetCounters(){
-        updateCounterHit(0);
-        updateCounterMiss(0);
+    function getGame(games, id) {
+      return games.find((game) => game.id === id)
     }
-  
+
+    const game = getGame(state.games, id);
+
     return (
       <Container>
+      <Text>Game ID = { game.id }</Text>
         <Button block success
-          onPress={() => {
-            updateCounterHit(counterHit+1);
-          }}>
+          onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Hit"}) }}>
           <Text>HIT</Text>
         </Button>
         <Button block danger
-          onPress={() => {
-            updateCounterMiss(counterMiss+1);
-          }}>
+          onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Miss"}) }}>
           <Text>MISS</Text>
         </Button>
 
-        <Text>Hit = {counterHit} | Miss = {counterMiss}</Text>
-        <Text>Total = {counterHit + counterMiss}</Text>
-        <Text>{(isNaN(counterHit/(counterHit+counterMiss))) ? 0 : Math.floor(counterHit/(counterHit+counterMiss)*100)}% success</Text>
+        <Text>Hit = { game.counterHit } | Miss = { game.counterMiss }</Text>
+        <Text>Total = { game.counterHit + game.counterMiss}</Text>
+        <Text>{isNaN(game.counterHit / game.counterHit + game.counterMiss) ? 0 : Math.floor(game.counterHit / game.counterHit + game.counterMiss) * 100 }% success</Text>
 
-        <Button block
+        <Button block disabled
           onPress={() => {resetCounters()}}>
           <Text>RESET</Text>
         </Button>
