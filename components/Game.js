@@ -14,7 +14,7 @@ function Game() {
   
     return (
       <Container>
-      <Button block success
+        <Button block success
           onPress={() => {
             updateCounterHit(counterHit+1);
           }}>

@@ -4,20 +4,20 @@ import Game from '../components/Game';
 
 function screenGame() {
 
-
   return (
-    <View style={styles.container}>
+    <View style={styles.game}>
       <Game></Game>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    game: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
     },
 });
 

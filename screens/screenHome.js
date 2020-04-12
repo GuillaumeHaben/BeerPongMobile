@@ -4,7 +4,7 @@ import { Button, Text} from 'native-base';
 
 function screenHome({ navigation }) {
     return (
-      <View style={styles.container}>
+      <View style={styles.home}>
         <Button block info
           onPress={() => {navigation.navigate('Game')}}>
           <Text>Start a Game</Text>
@@ -14,9 +14,9 @@ function screenHome({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    home: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
     },
