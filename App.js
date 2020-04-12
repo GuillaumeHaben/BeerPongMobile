@@ -1,21 +1,35 @@
 import 'react-native-gesture-handler'; {/* MUST BE IN LINE 1 OTHERWISE ERROR */}
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import screenHome from './screens/screenHome';
 import screenGame from './screens/screenGame';
+import screenHistory from './screens/screenHistory';
 
 export default function App() {
 
-  const Stack = createStackNavigator();
+  const HomeStack = createStackNavigator();
+
+  function HomeStackScreen() {
+    return (
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Home" component={screenHome} />
+        <HomeStack.Screen name="Game" component={screenGame} />
+      </HomeStack.Navigator>
+    );
+  }
+  const Menu = createBottomTabNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={screenHome} options={{ title: 'Beer Pong App' }}/>
-        <Stack.Screen name="Game" component={screenGame} />
-      </Stack.Navigator>
+      <Menu.Navigator initialRouteName="Home">
+        <Menu.Screen name="Home" component={HomeStackScreen} options={{ title: 'Home' }}/>
+        <Menu.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
+      </Menu.Navigator>
     </NavigationContainer>
   );
+
+
 }

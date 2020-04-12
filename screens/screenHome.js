@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { StyleSheet, View} from 'react-native';
-import { Button, Content, List, ListItem, Text } from 'native-base';
+import { Button, Content, List, ListItem, Text} from 'native-base';
 import { initialState, reducer } from "../reducers/Main.js";
 
 function screenHome({ navigation }) {
