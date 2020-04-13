@@ -35,6 +35,26 @@ export const reducer = (state, action) => {
         games: gamesCopy,
       };
     }
+    case "UPDATE_GAME_DECREMENT": {
+      /**
+       * action.id: Game id to modify
+       * action.counter: Counter to decrement, "Hit" or "Miss"
+       */
+      const gamesCopy = state.games.map((game) => {
+        if (game.id === action.id) {
+          if (action.counter == "Hit" && game.counterHit > 0) {
+            game.counterHit = game.counterHit - 1;
+          }
+          if (action.counter == "Miss" && game.counterMiss > 0) {
+            game.counterMiss = game.counterMiss - 1;
+          }
+        }
+        return game
+      });
+      return { ...state,
+        games: gamesCopy,
+      };
+    }
     case "DELETE_GAMES": {
       return { games: [] }
     }

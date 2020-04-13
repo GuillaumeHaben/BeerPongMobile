@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Text, Container} from 'native-base';
+import { Button, Icon, Text, Container, View} from 'native-base';
 import { Context } from "../context/MyContext.js"
 
 function Game({ id }) {
@@ -35,25 +35,33 @@ function Game({ id }) {
     const game = getGame(state.games, id);
 
     return (
-      game ? <Container>
-        <Button block success
-          onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Hit"}) }}>
-          <Text>HIT</Text>
-        </Button>
-        <Button block danger
-          onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Miss"}) }}>
-          <Text>MISS</Text>
-        </Button>
+      game ? 
+      <View>
+         <View style={{flexDirection: "row"}}>
+          <Button block success
+            onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Hit"}) }}>
+            <Text>{ game.counterHit } HIT</Text>
+          </Button>
+          { game.counterHit > 0 && <Button transparent
+            onPress={() => { dispatch({type: "UPDATE_GAME_DECREMENT", id: game.id, counter:"Hit"}) }}>
+            <Icon type='FontAwesome' name='undo' />
+          </Button> }
+        </View>
 
-        <Text>Hit = { game.counterHit } | Miss = { game.counterMiss }</Text>
+        <View style={{flexDirection: "row"}}>
+          <Button block danger
+            onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Miss"}) }}>
+            <Text>{ game.counterMiss } MISS</Text>
+          </Button>
+          { game.counterMiss > 0 && <Button transparent 
+            onPress={() => { dispatch({type: "UPDATE_GAME_DECREMENT", id: game.id, counter:"Miss"}) }}>
+            <Icon type='FontAwesome' name='undo' />
+          </Button> }
+        </View>
+
         <Text>Total = { game.counterHit + game.counterMiss}</Text>
         <Text>{ successRate(game.counterHit, game.counterMiss) }% success</Text>
-
-        <Button block disabled
-          onPress={() => {resetCounters()}}>
-          <Text>RESET</Text>
-        </Button>
-      </Container> : <Text>Loading ...</Text>
+      </View> : <Text>Loading ...</Text>
     );
     
 }
