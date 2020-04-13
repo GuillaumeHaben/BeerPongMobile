@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View} from 'react-native';
-import { Button, Body, List, ListItem, Text, Container, Header, Content, Left, Right, Thumbnail, } from 'native-base';
+import { StyleSheet, View, Alert} from 'react-native';
+import { Button, Body, List, ListItem, Text, Container, Content, Left, Right, Thumbnail, } from 'native-base';
 import { Context } from "../context/MyContext.js"
 import moment from 'moment'
 
@@ -19,29 +19,40 @@ function screenHistory({ navigation }) {
       return Math.floor(100 * hit / (hit + miss));
     }
 
+    const DeleteAlert = () => {
+      Alert.alert(
+        'Confirmation',
+        'Are you sure you want to delete all games?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {text: 'Yes', onPress: () => dispatch({type: "DELETE_GAMES"})}
+        ],
+        {cancelable: false},
+      );
+    }
   return (
     state.games.length != 0 ? 
     <Container>
          <Button full danger
-           onPress={() => { dispatch({type: "DELETE_GAMES"}) }}>
+           onPress={ DeleteAlert }>
            <Text>Delete All Games</Text>
          </Button>
         <Content>
           <List>
             { state.games.map(game => (
-            <ListItem thumbnail key={ game.id }>
+            <ListItem thumbnail key={ game.id } onPress={() => { navigation.navigate('Game', { id: game.id }) }}>
               <Left>
                 <Thumbnail square source={ require("../assets/redCup.png") } />
               </Left>
               <Body>
                 <Text>Game { game.id }</Text>
-                <Text note numberOfLines={1}>{ moment(game.date).from(moment()) }</Text>
                 <Text note numberOfLines={1}>Success rate: { successRate(game.counterHit, game.counterMiss) }%</Text>
               </Body>
               <Right>
-                <Button transparent onPress={() => { navigation.navigate('Game', { id: game.id }) }}>
-                  <Text>View</Text>
-                </Button>
+                <Text note>{ moment(game.date).format('L') }</Text>
               </Right>
             </ListItem>
             ))}

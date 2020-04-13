@@ -1,12 +1,7 @@
 import moment from "moment";
 
 export const initialState = {
-    games: [{
-      id: 0,
-      counterHit: 0,
-      counterMiss: 0,
-      date: moment()
-    }]
+    games: []
   };
   
 export const reducer = (state, action) => {
