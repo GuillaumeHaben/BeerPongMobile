@@ -3,7 +3,7 @@ import { StyleSheet, View} from 'react-native';
 import { Button, List, ListItem, Text} from 'native-base';
 import { Context } from "../context/MyContext.js"
 
-function screenHistory() {
+function screenHistory({ navigation }) {
 
   const [state, dispatch] = useContext(Context);
   
