@@ -16,9 +16,9 @@ function screenGame({ route }) {
 const styles = StyleSheet.create({
     game: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
+        padding:25,
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'white',
     },
 });
