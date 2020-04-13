@@ -36,7 +36,6 @@ function Game({ id }) {
 
     return (
       game ? <Container>
-      <Text>Game ID = { game.id }</Text>
         <Button block success
           onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Hit"}) }}>
           <Text>HIT</Text>
