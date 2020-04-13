@@ -3,6 +3,7 @@ import { StyleSheet, View} from 'react-native';
 import Game from '../components/Game';
 
 function screenGame({ route }) {
+  
   const { id } = route.params;
 
   return (

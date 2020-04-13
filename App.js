@@ -3,10 +3,10 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import screenHome from './screens/screenHome';
 import screenGame from './screens/screenGame';
 import screenHistory from './screens/screenHistory';
+import { ContextProvider } from "./context/MyContext.js"
 
 export default function App() {
 
@@ -23,12 +23,14 @@ export default function App() {
   const Menu = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
-      <Menu.Navigator initialRouteName="Home">
-        <Menu.Screen name="Home" component={HomeStackScreen} options={{ title: 'Home' }}/>
-        <Menu.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
-      </Menu.Navigator>
-    </NavigationContainer>
+    <ContextProvider>
+      <NavigationContainer>
+        <Menu.Navigator initialRouteName="Home">
+          <Menu.Screen name="Home" component={HomeStackScreen} options={{ title: 'Home' }}/>
+          <Menu.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
+        </Menu.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
   );
 
 
