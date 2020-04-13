@@ -6,9 +6,9 @@ import { Context } from "../context/MyContext.js"
 function screenHistory() {
 
   const [state, dispatch] = useContext(Context);
-
+  
   return (
-    state.games ? 
+    state.games.length != 0 ? 
     <View style={styles.history}>
         <Button block danger
           onPress={() => { dispatch({type: "DELETE_GAMES"}) }}>
