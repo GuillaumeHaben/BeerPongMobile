@@ -16,7 +16,7 @@ export default function App() {
     return (
       <HomeStack.Navigator>
         <HomeStack.Screen name="Home" component={screenHome} />
-        <HomeStack.Screen name="Game" component={screenGame} />
+        <HomeStack.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
       </HomeStack.Navigator>
     );
   }
