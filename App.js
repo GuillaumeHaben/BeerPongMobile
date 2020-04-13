@@ -3,6 +3,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import screenHome from './screens/screenHome';
 import screenGame from './screens/screenGame';
 import screenHistory from './screens/screenHistory';
@@ -14,9 +15,14 @@ export default function App() {
 
   function HomeTabScreen() {
     return (
-      <HomeTab.Navigator initialRouteName="Home">
-        <HomeTab.Screen name="Home" component={screenHome} />
-        <HomeTab.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
+      <HomeTab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: '#e74c3c' }}>
+        <HomeTab.Screen name="Home" component={screenHome} options={{ title: 'Home', tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          )}}/>
+        <HomeTab.Screen name="History" component={screenHistory} 
+          options={{ title: 'History', tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="history" color={color} size={size} />
+          )}}/>
       </HomeTab.Navigator>
     );
   }
@@ -27,7 +33,7 @@ export default function App() {
     <ContextProvider>
       <NavigationContainer>
         <Menu.Navigator>
-          <Menu.Screen name="Home" component={HomeTabScreen} options={{ title: 'Home' }}/>
+          <Menu.Screen name="Home" component={HomeTabScreen}/>
           <Menu.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
         </Menu.Navigator>
       </NavigationContainer>
