@@ -9,9 +9,9 @@ function screenHome({ navigation }) {
 
   return (
     <View style={styles.home}>
-      <Button block info
+      <Button style={styles.button} block info
         onPress={() => { navigation.navigate('Game', { id: state.games.length }) }}>
-        <Text>Start a Game</Text>
+        <Text style={styles.text}>Start a Game</Text>
       </Button>
     </View>
   );
@@ -20,8 +20,17 @@ function screenHome({ navigation }) {
 const styles = StyleSheet.create({
     home: {
       flex: 1,
+      padding: 25,
       backgroundColor: 'white',
-      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+      height: '10%',
+      justifyContent: 'center',
+    },
+    text: {
+      fontSize: 20,
+      color: 'white',
       justifyContent: 'center',
     },
   });

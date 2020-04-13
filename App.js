@@ -10,28 +10,27 @@ import { ContextProvider } from "./context/MyContext.js"
 
 export default function App() {
 
-  const HomeStack = createStackNavigator();
+  const HomeTab = createBottomTabNavigator();
 
-  function HomeStackScreen() {
+  function HomeTabScreen() {
     return (
-      <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={screenHome} />
-        <HomeStack.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
-      </HomeStack.Navigator>
+      <HomeTab.Navigator initialRouteName="Home">
+        <HomeTab.Screen name="Home" component={screenHome} />
+        <HomeTab.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
+      </HomeTab.Navigator>
     );
   }
-  const Menu = createBottomTabNavigator();
+
+  const Menu = createStackNavigator();
 
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Menu.Navigator initialRouteName="Home">
-          <Menu.Screen name="Home" component={HomeStackScreen} options={{ title: 'Home' }}/>
-          <Menu.Screen name="History" component={screenHistory} options={{ title: 'History' }}/>
+        <Menu.Navigator>
+          <Menu.Screen name="Home" component={HomeTabScreen} options={{ title: 'Home' }}/>
+          <Menu.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
         </Menu.Navigator>
       </NavigationContainer>
     </ContextProvider>
   );
-
-
 }
