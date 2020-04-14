@@ -11,31 +11,42 @@ import { ContextProvider } from "./context/MyContext.js"
 
 export default function App() {
 
-  const HomeTab = createBottomTabNavigator();
+  function getHeaderTitle(route) {
+    //const routeName = route.state ? route.state.routes[route.state.index].name : route.params?.screen || 'Home'
+    // switch (routeName) {
+    //   case 'Home':
+    //     return 'Home'
+    //   case 'History':
+    //     return 'History'
+    // }
+    return route.state ? route.state.routes[route.state.index].name : route.params?.screen || 'Home'
+  }
+
+  const Menu = createBottomTabNavigator();
 
   function HomeTabScreen() {
     return (
-      <HomeTab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: '#e74c3c' }}>
-        <HomeTab.Screen name="Home" component={screenHome} options={{ title: 'Home', tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+      <Menu.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: '#e74c3c' }}>
+        <Menu.Screen name="Home" component={screenHome} options={{ title: 'Home', tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
           )}}/>
-        <HomeTab.Screen name="History" component={screenHistory} 
+        <Menu.Screen name="History" component={screenHistory} 
           options={{ title: 'History', tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="history" color={color} size={size} />
           )}}/>
-      </HomeTab.Navigator>
+      </Menu.Navigator>
     );
   }
 
-  const Menu = createStackNavigator();
+  const HomeStack = createStackNavigator();
 
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Menu.Navigator>
-          <Menu.Screen name="Home" component={HomeTabScreen}/>
-          <Menu.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
-        </Menu.Navigator>
+        <HomeStack.Navigator>
+          <HomeStack.Screen name="Home" component={HomeTabScreen} options={({ route }) => ({ title: getHeaderTitle(route)})}/>
+          <HomeStack.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
+        </HomeStack.Navigator>
       </NavigationContainer>
     </ContextProvider>
   );
