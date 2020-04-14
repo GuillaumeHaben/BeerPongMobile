@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Button, Icon, Text} from 'native-base';
-import { StyleSheet, View} from 'react-native';
-import { Context } from "../context/MyContext.js"
+import { StyleSheet, View, Alert} from 'react-native';
+import { Context } from "../context/MyContext.js";
+import {useNavigation} from '@react-navigation/native';
 
 function Game({ id }) {
 
     const [state, dispatch] = useContext(Context);
+    const navigation = useNavigation();
 
     /**
      * Find game by id
@@ -28,12 +30,23 @@ function Game({ id }) {
       return Math.floor(100 * hit / (hit + miss));
     }
 
-    // Check if game exist, if not, create it
-    if (state.games.length == id) {
-      dispatch({type: "ADD_GAME"});
+    const GameEndAlert = (gameId) => {
+      Alert.alert(
+        'Confirmation',
+        'So, what\'s the result ?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {text: 'Win', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status: 1}); navigation.navigate('Home')}},
+          {text: 'Loose', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status:0}); navigation.navigate('Home')}}
+        ],
+        {cancelable: false},
+      );
     }
 
-    const game = getGame(state.games, id);
+    const game = getGame(state.games,id);
 
     return (
       game ? 
@@ -67,6 +80,13 @@ function Game({ id }) {
 
         <View style={styles.bottomInfoRow}>
           <Text style={styles.textSucess}>{ successRate(game.counterHit, game.counterMiss) }%{'\n'}success</Text>
+        </View>
+
+        <View style={styles.buttonRowEnd}>
+          <Button style={styles.buttonEnd} block warning
+            onPress={() => {GameEndAlert(game.id)}}>
+            <Text>END</Text>
+          </Button>
         </View>
       </View> : <Text>Loading ...</Text>
     );
@@ -106,6 +126,20 @@ const styles = StyleSheet.create({
   buttonHit: {
     flex:1,
     height:'100%',
+  },
+  buttonRowEnd:{
+    flex: 1,
+    width: "100%",
+    marginHorizontal:10,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  buttonEnd: {
+    fontSize:30,
+    width:'100%',
+    fontWeight:'bold',
+    textAlign: 'center',
   },
   textScore:{
     fontSize:30,

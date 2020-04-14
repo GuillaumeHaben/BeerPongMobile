@@ -50,6 +50,7 @@ function screenHistory({ navigation }) {
               <Body>
                 <Text>Game { game.id }</Text>
                 <Text note numberOfLines={1}>Success rate: { successRate(game.counterHit, game.counterMiss) }%</Text>
+                <Text note numberOfLines={1}>{game.status == 1 ? "Win" : (game.status == 0 ? "Loose" : "Pending") }</Text>
               </Body>
               <Right>
                 <Text note>{ moment(game.date).format('L') }</Text>

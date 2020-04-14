@@ -1,14 +1,18 @@
 import React from 'react';
 import { StyleSheet, View} from 'react-native';
 import Game from '../components/Game';
+import GameStat from '../components/GameStat';
 
-function screenGame({ route }) {
-  
+function screenGame({ route , navigation}) {
+
   const { id } = route.params;
+  const gameFinished = false;
 
   return (
-    <View style={ styles.game }>
-      <Game id={ id }></Game>
+    <View style={styles.game}>
+      {gameFinished ?
+      <GameStat id={id}></GameStat> :
+      <Game id={id}></Game>}
     </View>
   );
 }

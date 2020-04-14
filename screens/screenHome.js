@@ -10,7 +10,10 @@ function screenHome({ navigation }) {
   return (
     <View style={styles.home}>
       <Button style={styles.button} block info
-        onPress={() => { navigation.navigate('Game', { id: state.games.length }) }}>
+        onPress={() => {
+          dispatch({type: "ADD_GAME"});
+          navigation.navigate('Game', { id: state.games.length })
+          }}>
         <Text style={styles.text}>Start a Game</Text>
       </Button>
     </View>

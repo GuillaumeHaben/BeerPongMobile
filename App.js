@@ -45,7 +45,7 @@ export default function App() {
       <NavigationContainer>
         <HomeStack.Navigator>
           <HomeStack.Screen name="Home" component={HomeTabScreen} options={({ route }) => ({ title: getHeaderTitle(route)})}/>
-          <HomeStack.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id})} />
+          <HomeStack.Screen name="Game" component={screenGame} options={({ route }) => ({ title: 'Game '+route.params.id,gestureEnabled:false})} />
         </HomeStack.Navigator>
       </NavigationContainer>
     </ContextProvider>

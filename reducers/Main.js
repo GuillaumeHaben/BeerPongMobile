@@ -12,10 +12,26 @@ export const reducer = (state, action) => {
         id: newId,
         counterHit: 0,
         counterMiss: 0,
-        date: moment()
+        date: moment(),
+        status:-1, //-1 : pending | 0 : lost | 1 : win
       };
       return { ...state,
         games: [...state.games, newGame],
+      };
+    }
+    case "FINISH_GAME":{
+      /**
+       * action.id: Game id to modify
+       * action.status: // 0 if lost | 1 if win
+       */
+      const gamesCopy = state.games.map((game) => {
+        if (game.id === action.id) {
+          game.status = action.status;
+        }
+        return game
+      });
+      return { ...state,
+        games: gamesCopy,
       };
     }
     case "UPDATE_GAME_INCREMENT": {
