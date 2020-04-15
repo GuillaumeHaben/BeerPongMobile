@@ -32,7 +32,7 @@ Start the project.
 
 - [x] Game: Track hit & miss shots
 - [x] Game: display success rate
-- [ ] Game: End a game by winning or loosing
+- [x] Game: End a game by winning or loosing
 - [ ] Game: Add rim shots ?
 - [x] History: List past games
 - [x] History: Delete all past games

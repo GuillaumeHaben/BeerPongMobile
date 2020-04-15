@@ -4,20 +4,10 @@ import { StyleSheet, View, Alert} from 'react-native';
 import { Context } from "../context/MyContext.js";
 import {useNavigation} from '@react-navigation/native';
 
-function Game({ id }) {
+function Game({ game }) {
 
     const [state, dispatch] = useContext(Context);
     const navigation = useNavigation();
-
-    /**
-     * Find game by id
-     * @param {*} games List of games
-     * @param {*} id id of game you're looking for
-     * return a game
-     */
-    function getGame(games, id) {
-      return games.find((game) => game.id === id)
-    }
 
     /**
      * Return successRate of the current game
@@ -39,14 +29,12 @@ function Game({ id }) {
             text: 'Cancel',
             style: 'cancel',
           },
-          {text: 'Win', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status: 1}); navigation.navigate('Home')}},
-          {text: 'Loose', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status:0}); navigation.navigate('Home')}}
+          {text: 'Win', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status: 1}); navigation.navigate('Game')}},
+          {text: 'Loose', onPress: () => { dispatch({type: "FINISH_GAME", id: gameId, status:0}); navigation.navigate('Game')}}
         ],
         {cancelable: false},
       );
     }
-
-    const game = getGame(state.games,id);
 
     return (
       game ? 
