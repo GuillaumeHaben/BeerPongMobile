@@ -1,7 +1,17 @@
 import moment from "moment";
 
 export const initialState = {
-    games: []
+    games: [{
+      id: 0,
+      history:[
+        {
+          hit: 0,
+          miss: 0
+        }
+      ],
+      date: moment(),
+      status:1, //-1 : pending | 0 : lost | 1 : win
+    }]
   };
   
 export const reducer = (state, action) => {
@@ -58,7 +68,6 @@ export const reducer = (state, action) => {
             });
           }
         }
-        console.log(game)
         return game
       });
       return { ...state,

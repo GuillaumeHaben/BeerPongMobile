@@ -38,6 +38,6 @@ Start the project.
 - [x] History: Delete all past games
 - [ ] Stats: Create stats tab
 - [ ] Stats: Display number of victories
-- [ ] Stats: Display average success rate
+- [x] Stats: Display average success rate
 - [ ] Main: Auth ? 
 - [ ] Main: Persist data online ?  

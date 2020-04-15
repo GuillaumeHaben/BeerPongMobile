@@ -33,7 +33,7 @@ export function getGameLastScore(game) {
  * @param {*} game A game
  */
 export function getGameStatus(game) {
-    game.status >= 0 ? true : false;
+    return game.status >= 0 ? true : false;
 }
 
 
