@@ -10,8 +10,12 @@ export const reducer = (state, action) => {
       const newId = parseInt(state.games.length)
       const newGame = {
         id: newId,
-        counterHit: 0,
-        counterMiss: 0,
+        history:[
+          {
+            hit: 0,
+            miss: 0
+          }
+        ],
         date: moment(),
         status:-1, //-1 : pending | 0 : lost | 1 : win
       };
@@ -42,12 +46,19 @@ export const reducer = (state, action) => {
       const gamesCopy = state.games.map((game) => {
         if (game.id === action.id) {
           if (action.counter == "Hit") {
-            game.counterHit = game.counterHit + 1;
+            game.history.push({
+              hit: game.history[game.history.length - 1].hit + 1,
+              miss: game.history[game.history.length - 1].miss
+            });
           }
           if (action.counter == "Miss") {
-            game.counterMiss = game.counterMiss + 1;
+            game.history.push({
+              hit: game.history[game.history.length - 1].hit,
+              miss: game.history[game.history.length - 1].miss + 1
+            });
           }
         }
+        console.log(game)
         return game
       });
       return { ...state,
@@ -61,12 +72,7 @@ export const reducer = (state, action) => {
        */
       const gamesCopy = state.games.map((game) => {
         if (game.id === action.id) {
-          if (action.counter == "Hit" && game.counterHit > 0) {
-            game.counterHit = game.counterHit - 1;
-          }
-          if (action.counter == "Miss" && game.counterMiss > 0) {
-            game.counterMiss = game.counterMiss - 1;
-          }
+          game.history = game.history.pop();
         }
         return game
       });

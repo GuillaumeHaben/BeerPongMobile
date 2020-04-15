@@ -2,23 +2,15 @@ import React, { useContext } from 'react';
 import { Button, Icon, Text} from 'native-base';
 import { StyleSheet, View, Alert} from 'react-native';
 import { Context } from "../context/MyContext.js";
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { successRate, getGameLastScore } from "../utils/toolsGame.js";
 
 function Game({ game }) {
 
     const [state, dispatch] = useContext(Context);
     const navigation = useNavigation();
-
-    /**
-     * Return successRate of the current game
-     * @param {*} hit Number of hit
-     * @param {*} miss Number of miss
-     * return a percentage
-     */
-    function successRate(hit, miss) {
-      if (hit == 0 && miss == 0) return 0;
-      return Math.floor(100 * hit / (hit + miss));
-    }
+    const gameHit =  getGameLastScore(game).hit;
+    const gameMiss =  getGameLastScore(game).miss; 
 
     const GameEndAlert = (gameId) => {
       Alert.alert(
@@ -43,7 +35,7 @@ function Game({ game }) {
          <View style={styles.buttonRow}>
           <Button style={styles.buttonHit} block success
             onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Hit"}) }}>
-            <Text style={styles.textScore}>{ game.counterHit }{'\n'}HIT</Text>
+            <Text style={styles.textScore}>{ gameHit }{'\n'}HIT</Text>
           </Button>
           <Button transparent
             onPress={() => { dispatch({type: "UPDATE_GAME_DECREMENT", id: game.id, counter:"Hit"}) }}>
@@ -54,7 +46,7 @@ function Game({ game }) {
         <View style={styles.buttonRow}>
           <Button style={styles.buttonHit} block danger
             onPress={() => { dispatch({type: "UPDATE_GAME_INCREMENT", id: game.id, counter:"Miss"}) }}>
-            <Text style={styles.textScore}>{ game.counterMiss }{'\n'}MISS</Text>
+            <Text style={styles.textScore}>{  gameMiss  }{'\n'}MISS</Text>
           </Button>
           <Button transparent 
             onPress={() => { dispatch({type: "UPDATE_GAME_DECREMENT", id: game.id, counter:"Miss"}) }}>
@@ -63,16 +55,16 @@ function Game({ game }) {
         </View>
 
         <View style={styles.totalInfoRow}>
-          <Text>{ game.counterHit + game.counterMiss} shots</Text>
+          <Text>{ gameHit + gameMiss} shots</Text>
         </View>
 
         <View style={styles.bottomInfoRow}>
-          <Text style={styles.textSucess}>{ successRate(game.counterHit, game.counterMiss) }%{'\n'}success</Text>
+          <Text style={styles.textSucess}>{ successRate(gameHit, gameMiss) }%{'\n'}success</Text>
         </View>
 
         <View style={styles.buttonRowEnd}>
           <Button style={styles.buttonEnd} block warning
-            onPress={() => {GameEndAlert(game.id)}}>
+            onPress={() => { GameEndAlert(game.id) }}>
             <Text>END</Text>
           </Button>
         </View>

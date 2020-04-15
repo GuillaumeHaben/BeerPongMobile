@@ -1,38 +1,28 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Alert} from 'react-native';
 import { Button, Body, List, ListItem, Text, Container, Content, Left, Right, Thumbnail, } from 'native-base';
-import { Context } from "../context/MyContext.js"
-import moment from 'moment'
+import { Context } from "../context/MyContext.js";
+import { successRate, getGameLastScore } from "../utils/toolsGame.js";
+import moment from 'moment';
 
 function screenHistory({ navigation }) {
 
   const [state, dispatch] = useContext(Context);
+  const DeleteAlert = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete all games?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {text: 'Yes', onPress: () => dispatch({type: "DELETE_GAMES"})}
+      ],
+      {cancelable: false},
+    );
+  };
 
-  /**
-     * Return successRate of the current game
-     * @param {*} hit Number of hit
-     * @param {*} miss Number of miss
-     * return a percentage
-     */
-    function successRate(hit, miss) {
-      if (hit == 0 && miss == 0) return 0;
-      return Math.floor(100 * hit / (hit + miss));
-    }
-
-    const DeleteAlert = () => {
-      Alert.alert(
-        'Confirmation',
-        'Are you sure you want to delete all games?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {text: 'Yes', onPress: () => dispatch({type: "DELETE_GAMES"})}
-        ],
-        {cancelable: false},
-      );
-    }
   return (
     state.games.length != 0 ? 
     <Container>
@@ -49,7 +39,7 @@ function screenHistory({ navigation }) {
               </Left>
               <Body>
                 <Text>Game { game.id }</Text>
-                <Text note numberOfLines={1}>Success rate: { successRate(game.counterHit, game.counterMiss) }%</Text>
+                <Text note numberOfLines={1}>Success rate: { successRate(getGameLastScore(game).hit, getGameLastScore(game).miss) }%</Text>
                 <Text note numberOfLines={1}>{game.status == 1 ? "Win" : (game.status == 0 ? "Loose" : "Pending") }</Text>
               </Body>
               <Right>

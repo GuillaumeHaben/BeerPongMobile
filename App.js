@@ -13,13 +13,6 @@ import { StyleSheet, SafeAreaView,StatusBar } from 'react-native';
 export default function App() {
 
   function getHeaderTitle(route) {
-    //const routeName = route.state ? route.state.routes[route.state.index].name : route.params?.screen || 'Home'
-    // switch (routeName) {
-    //   case 'Home':
-    //     return 'Home'
-    //   case 'History':
-    //     return 'History'
-    // }
     return route.state ? route.state.routes[route.state.index].name : route.params?.screen || 'Home'
   }
 

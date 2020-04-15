@@ -1,22 +1,12 @@
-import React, { useContext } from 'react';
-import { Button, Icon, Text} from 'native-base';
+import React from 'react';
+import { Text} from 'native-base';
 import { StyleSheet, View} from 'react-native';
-import { Context } from "../context/MyContext.js"
+import { successRate, getGameLastScore } from "../utils/toolsGame.js";
 
 function GameStat({ game }) {
 
-    const [state, dispatch] = useContext(Context);
-
-     /**
-     * Return successRate of the current game
-     * @param {*} hit Number of hit
-     * @param {*} miss Number of miss
-     * return a percentage
-     */
-    function successRate(hit, miss) {
-      if (hit == 0 && miss == 0) return 0;
-      return Math.floor(100 * hit / (hit + miss));
-    }
+    const gameHit =  getGameLastScore(game).hit;
+    const gameMiss =  getGameLastScore(game).miss; 
 
     return (
       game ? 
@@ -24,24 +14,18 @@ function GameStat({ game }) {
         <View>
             <Text>Result : { game.status==1 ? "Win" : "Loose" } </Text>
         </View>
-
          <View style={styles.buttonRow}>
-            <Text style={styles.textScore}>{ game.counterHit } HIT</Text>
+            <Text style={styles.textScore}>{ gameHit } HIT</Text>
         </View>
-
         <View style={styles.buttonRow}>
-            <Text style={styles.textScore}>{ game.counterMiss } MISS</Text>
+            <Text style={styles.textScore}>{ gameMiss } MISS</Text>
         </View>
-
         <View style={styles.totalInfoRow}>
-          <Text>{ game.counterHit + game.counterMiss} shots</Text>
+          <Text>{ gameHit + gameMiss } shots</Text>
         </View>
-
         <View style={styles.buttonRow}>
-          <Text style={styles.textScore}>{ successRate(game.counterHit, game.counterMiss) }%{'\n'}success</Text>
+          <Text style={styles.textScore}>{ successRate(gameHit, gameMiss) }%{'\n'}success</Text>
         </View>
-
-
       </View> : <Text>Loading ...</Text>
     );
     
