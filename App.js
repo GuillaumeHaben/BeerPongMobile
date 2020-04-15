@@ -8,6 +8,7 @@ import screenHome from './screens/screenHome';
 import screenGame from './screens/screenGame';
 import screenHistory from './screens/screenHistory';
 import { ContextProvider } from "./context/MyContext.js"
+import { StyleSheet, SafeAreaView,StatusBar } from 'react-native';
 
 export default function App() {
 
@@ -41,6 +42,8 @@ export default function App() {
   const HomeStack = createStackNavigator();
 
   return (
+    <SafeAreaView style={styles.safe}>
+    <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
     <ContextProvider>
       <NavigationContainer>
         <HomeStack.Navigator>
@@ -49,5 +52,12 @@ export default function App() {
         </HomeStack.Navigator>
       </NavigationContainer>
     </ContextProvider>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+  },
+});
