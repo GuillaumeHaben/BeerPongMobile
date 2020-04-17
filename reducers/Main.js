@@ -81,7 +81,7 @@ export const reducer = (state, action) => {
        */
       const gamesCopy = state.games.map((game) => {
         if (game.id === action.id) {
-          game.history = game.history.pop();
+          game.history.pop();
         }
         return game
       });
